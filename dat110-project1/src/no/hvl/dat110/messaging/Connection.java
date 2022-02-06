@@ -36,28 +36,33 @@ public class Connection {
 
 		byte[] data;
 		
-		// TODO - START
-		// encapsulate the data contained in the message and write to the output stream
+		//Bruker metoden fra MessageUtils for å innkapsle meldingen
+		data = MessageUtils.encapsulate(message);
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-			
-		// TODO - END
-
+		try {
+			//Skriver dataen til outStream
+			outStream.write(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	public Message receive() {
 
 		Message message = null;
 		byte[] data;
-		
-		// TODO - START
-		// read a segment from the input stream and decapsulate into message
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+				
+		try {
+			//Bruker intStream for å lese inn alle bytes
+			data = inStream.readAllBytes();
+			
+			//Lager en ny melding ved å pakke ut data ved hjelp av metoden i MessageUtils
+			message = MessageUtils.decapsulate(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		return message;
 		

@@ -15,16 +15,23 @@ public class MessageUtils {
 		
 		byte[] segment = null;
 		byte[] data;
+
+		//Henter ut data fra meldingen
+		data = message.getData();
 		
-		// TODO - START
+		//Oppretter et nytt segment, som vi vet skal være 128 bytes
+		segment = new byte[SEGMENTSIZE];
 		
-		// encapulate/encode the payload data of the message and form a segment
-		// according to the segment format for the messagin layer
+		//Den første byten skal være lengden på segmentet
+		segment[0] = (byte) data.length;
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		//Legger så inn payloaden. 
+		for(int i = 1; i < data.length+1; i++) {
 			
-		// TODO - END
+			segment[i] = data[i-1];
+			
+		}
+		
 		return segment;
 		
 	}
@@ -33,13 +40,17 @@ public class MessageUtils {
 
 		Message message = null;
 		
-		// TODO - START
-		// decapsulate segment and put received data into a message
+		//Finner først ut hvor stor payloaden er.
+		int payloadSize = (int) segment[0];
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		//Lager en tom array for å hente ut payloaden
+		byte[] payload = new byte[payloadSize]; 
 		
-		// TODO - END
+		for(int i = 0; i < payloadSize; i++) {
+			payload[i] = segment[i+1];
+		}
+		
+		message = new Message(payload);
 		
 		return message;
 		

@@ -8,12 +8,14 @@ public class Message {
 
 	public Message(byte[] data) {
 		
-		// TODO - START
+		//Sjekker at data ikke er null og at lengden er mindre eller lik 127. 
+		if(data != null && data.length <= 127) {
+			this.data = data;
+		}
+		else {
+			System.out.println("Data of wrong format");
+		}
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.constructor("Message"));
-			
-		// TODO - END
 	}
 
 	public byte[] getData() {
