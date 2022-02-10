@@ -32,14 +32,24 @@ public class Controller  {
 		sensor = new SensorStub(sensorclient);
 		
 		// connect to sensor and display RPC servers
+		displayclient.connect();
 		sensorclient.connect();
 		
-		int temperature = sensor.read();
+
+		for(int i = 0; i < N; i++) {
+			//Skriver til displayet
+			int temperatur = sensor.read();
+			display.write(String.valueOf(temperatur));
+			
+			try {
+				Thread.sleep(2000);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
-		displayclient.connect();
-		display.write("Temperature is " + temperature);
-		
-	
+
 		// TODO - END
 		
 		stopdisplay.stop();

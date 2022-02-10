@@ -15,8 +15,6 @@ public class RPCUtils {
 		
 		// Encapsulate the rpcid and payload in a byte array according to the  RPC message syntax
 		
-		System.out.println("rpcid: " + rpcid);
-		System.out.println("payload: " + payload);
 		
 		if(payload != null) {
 			rpcmsg = new byte[(payload.length)+1];
@@ -29,7 +27,6 @@ public class RPCUtils {
 			}
 		}
 		
-		System.out.println("Ny pakke klar: " + rpcmsg.length + ", "+ rpcmsg);
 		
 		// TODO - END
 		
@@ -44,14 +41,12 @@ public class RPCUtils {
 		
 		// Decapsulate the rpcid and payload in a byte array according to the  RPC message syntax
 		
-		// Den første byten skal fortelle hva som er id
-		byte rpcid = rpcmsg[0];
 		
 		// Payload skal være så stor som hele meldingen, minus 1 for den første
 		payload = new byte[rpcmsg.length-1];
 		
 		// Går gjennom meldingen, og legger til hver byte
-		for(int i = 0; i < rpcmsg.length-1; i++) {
+		for(int i = 0; i < payload.length; i++) {
 			payload[i] = rpcmsg[i+1];
 		}
 			

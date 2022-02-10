@@ -28,7 +28,10 @@ public class RPCClient {
 		// TODO - START
 		// disconnect/close the underlying messaging connection
 		
-		connection.close();
+		if(connection != null) {
+			connection.close();
+		}
+		
 		
 		// TODO - END
 	}
@@ -36,6 +39,10 @@ public class RPCClient {
 	public byte[] call(byte rpcid, byte[] params) {
 		
 		byte[] returnval = null;
+		
+		if(connection == null) {
+			connect();
+		}
 		
 		// TODO - START 
 		
@@ -51,14 +58,11 @@ public class RPCClient {
 			
 		*/
 		
-		connect();
-	
-		
 		System.out.println("[rpcClient]: kaller på encapsulate med rpcid:" + rpcid + ", og params: " + params.toString());
-		byte[] sendData = RPCUtils.encapsulate(rpcid, params);
+		byte[] rpcmsg = RPCUtils.encapsulate(rpcid, params);
 		
 		System.out.println("[rpcClient]: lager Message");
-		Message message = new Message(sendData);
+		Message message = new Message(rpcmsg);
 		
 		System.out.println("[rpcClient]: connection.send");
 		connection.send(message);
@@ -69,7 +73,7 @@ public class RPCClient {
 		System.out.println("[rpcClient]: connection.receive");
 		Message m = connection.receive();
 		
-		returnval = m.getData();		
+		returnval = RPCUtils.decapsulate(m.getData());		
 		System.out.println("[rpcClient]: returnval:" + returnval);
 		
 		

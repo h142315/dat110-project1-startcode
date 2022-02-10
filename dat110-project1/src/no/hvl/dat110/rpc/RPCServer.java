@@ -52,17 +52,16 @@ public class RPCServer {
 		   byte[] payload = requestmsg.getData();
 		   rpcid = payload[0];
 		   
-		   byte[] params = new byte[(payload.length)-1];
-		   
-		   for(int i = 0; i < payload.length-1; i++) {
-			   params[i] = payload[i+1];
-		   }
+		   byte[] params = RPCUtils.decapsulate(payload);
 		   
 		   RPCRemoteImpl service = services.get(rpcid);
 		   
+		   
 		   byte[] returnValue = service.invoke(params);
 		   
-		   replymsg = new Message(returnValue);
+		   
+		   byte[] resp = RPCUtils.encapsulate(rpcid, returnValue);
+		   replymsg = new Message(resp);
 		   connection.send(replymsg);
 			
 		   // TODO - END

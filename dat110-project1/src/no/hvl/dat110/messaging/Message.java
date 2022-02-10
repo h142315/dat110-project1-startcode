@@ -9,7 +9,7 @@ public class Message {
 	public Message(byte[] data) {
 		
 		//Sjekker at data ikke er null og at lengden er mindre eller lik 127. 
-		if(data != null && data.length <= 127) {
+		if(data != null && data.length < 128) {
 			this.data = data;
 		}
 		else {

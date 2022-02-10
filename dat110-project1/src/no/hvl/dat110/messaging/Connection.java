@@ -36,10 +36,11 @@ public class Connection {
 
 		byte[] data;
 		
-		//Bruker metoden fra MessageUtils for å innkapsle meldingen
-		data = MessageUtils.encapsulate(message);
-		
 		try {
+			
+			//Bruker metoden fra MessageUtils for å innkapsle meldingen
+			data = MessageUtils.encapsulate(message);
+			
 			//Skriver dataen til outStream
 			outStream.write(data);
 		} catch (IOException e) {
@@ -58,7 +59,7 @@ public class Connection {
 				
 		try {
 			//Bruker intStream for å lese inn alle bytes
-			data = inStream.readAllBytes();
+			data = inStream.readNBytes(MessageUtils.SEGMENTSIZE);
 			System.out.println("[Connection]: receive --> data: " + data.toString());
 			
 			//Lager en ny melding ved å pakke ut data ved hjelp av metoden i MessageUtils
@@ -66,7 +67,7 @@ public class Connection {
 			System.out.println("[Connection]: receive --> message: " + message.getData().length);
 
 		} catch (IOException e) {
-			System.out.println("Det gikk ikkje :(");
+			System.out.println("Det gikk ikke :(");
 			e.printStackTrace();
 		}
 		
