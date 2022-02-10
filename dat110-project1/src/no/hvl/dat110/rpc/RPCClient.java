@@ -18,8 +18,7 @@ public class RPCClient {
 		// TODO - START
 		// connect using the underlying messaging layer connection
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		connection = msgclient.connect();		
 		
 		// TODO - END
 	}
@@ -29,8 +28,7 @@ public class RPCClient {
 		// TODO - START
 		// disconnect/close the underlying messaging connection
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		connection.close();
 		
 		// TODO - END
 	}
@@ -52,9 +50,29 @@ public class RPCClient {
 		according to the RPC message format
 			
 		*/
-				
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		
+		connect();
+	
+		
+		System.out.println("[rpcClient]: kaller på encapsulate med rpcid:" + rpcid + ", og params: " + params.toString());
+		byte[] sendData = RPCUtils.encapsulate(rpcid, params);
+		
+		System.out.println("[rpcClient]: lager Message");
+		Message message = new Message(sendData);
+		
+		System.out.println("[rpcClient]: connection.send");
+		connection.send(message);
+		
+		//vente????
+		//disconnect();
+		
+		System.out.println("[rpcClient]: connection.receive");
+		Message m = connection.receive();
+		
+		returnval = m.getData();		
+		System.out.println("[rpcClient]: returnval:" + returnval);
+		
+		
 		
 		// TODO - END
 		return returnval;

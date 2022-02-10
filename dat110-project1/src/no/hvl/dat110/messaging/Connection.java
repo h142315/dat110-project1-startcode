@@ -53,16 +53,23 @@ public class Connection {
 
 		Message message = null;
 		byte[] data;
+		
+		System.out.println("Er no i receive-metoden");
 				
 		try {
 			//Bruker intStream for å lese inn alle bytes
 			data = inStream.readAllBytes();
+			System.out.println("[Connection]: receive --> data: " + data.toString());
 			
 			//Lager en ny melding ved å pakke ut data ved hjelp av metoden i MessageUtils
 			message = MessageUtils.decapsulate(data);
+			System.out.println("[Connection]: receive --> message: " + message.getData().length);
+
 		} catch (IOException e) {
+			System.out.println("Det gikk ikkje :(");
 			e.printStackTrace();
 		}
+		
 		
 		return message;
 		

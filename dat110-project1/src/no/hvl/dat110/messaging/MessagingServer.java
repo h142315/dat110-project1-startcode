@@ -33,7 +33,10 @@ public class MessagingServer {
 
 		try {
 			//Lager en ny connection ved å bruke Socket sin accept-metode.
-			connection = new Connection(welcomeSocket.accept());
+			
+			Socket connectionSocket = welcomeSocket.accept();
+			
+			connection = new Connection(connectionSocket);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
